@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Soporte</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <style>
+    body {
+      margin: 0;
+      background-color: black;
+      color: white;
+    }
+    .active-tab svg,
+    .active-tab span {
+      color: #a855f7 !important;
+      stroke: #a855f7 !important;
+    }
+  </style>
+</head>
+<body class="flex flex-col min-h-screen justify-between">
+
+  <!-- Soporte -->
+  <main class="p-4 pb-20">
+    <div class="bg-gray-900 text-white shadow-md rounded-2xl p-6 max-w-xl mx-auto space-y-6">
+      <div class="flex items-center gap-3">
+        <i data-lucide="life-buoy" class="text-purple-500"></i>
+        <h2 class="text-2xl font-bold">Centro de Soporte</h2>
+      </div>
+      <p class="text-sm text-gray-300">¿Tienes algún problema o duda? Envíanos un mensaje.</p>
+
+      <form id="supportForm" action="https://formspree.io/f/mpwlqzvd" method="POST" class="space-y-4">
+        <div>
+          <label for="nombre" class="block text-sm mb-1">Nombre</label>
+          <input type="text" id="nombre" name="nombre" required
+            class="w-full p-2 rounded bg-gray-800 border border-gray-700 text-white placeholder-gray-500" placeholder="Tu nombre">
+        </div>
+        <div>
+          <label for="email" class="block text-sm mb-1">Correo electrónico</label>
+          <input type="email" id="email" name="email" required
+            class="w-full p-2 rounded bg-gray-800 border border-gray-700 text-white placeholder-gray-500" placeholder="ejemplo@email.com">
+        </div>
+        <div>
+          <label for="motivo" class="block text-sm mb-1">Motivo del mensaje</label>
+          <select id="motivo" name="motivo"
+            class="w-full p-2 rounded bg-gray-800 border border-gray-700 text-white">
+            <option value="soporte">Soporte técnico</option>
+            <option value="sugerencia">Sugerencia</option>
+            <option value="reporte">Reportar un problema</option>
+            <option value="otro">Otro</option>
+          </select>
+        </div>
+        <div>
+          <label for="mensaje" class="block text-sm mb-1">Mensaje</label>
+          <textarea id="mensaje" name="mensaje" rows="4" required
+            class="w-full p-2 rounded bg-gray-800 border border-gray-700 text-white placeholder-gray-500" placeholder="Escribe tu mensaje..."></textarea>
+        </div>
+        <div class="text-right">
+          <button type="submit"
+            class="bg-purple-600 hover:bg-purple-700 text-white px-5 py-2 rounded-xl transition-all">
+            <i data-lucide="send" class="inline-block w-4 h-4 mr-1"></i> Enviar
+          </button>
+        </div>
+      </form>
+
+      <!-- Mensaje de éxito -->
+      <div id="successMsg"
+           class="fixed inset-0 bg-black bg-opacity-80 backdrop-blur-sm flex items-center justify-center z-50 hidden"
+           onclick="this.classList.add('hidden')">
+        <div class="bg-purple-600 text-white px-6 py-4 rounded-xl text-center">
+          ✅ ¡ enviado correctamente!
+          <p class="text-xs mt-1 opacity-80">Toca en cualquier parte para cerrar</p>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- Menú inferior -->
+  <nav class="fixed bottom-0 left-0 right-0 bg-black border-t border-gray-700 flex justify-around p-2 text-white text-[10px] z-10">
+    <a href="go:perfil" class="flex flex-col items-center hover:opacity-90">
+      <i data-lucide="home" class="w-5 h-5"></i>
+      <span>Inicio</span>
+    </a>
+    <a href="go:buscar" class="flex flex-col items-center hover:opacity-90">
+      <i data-lucide="search" class="w-5 h-5"></i>
+      <span>Buscar</span>
+    </a>
+    <a href="go:favoritos" class="flex flex-col items-center hover:opacity-90">
+      <i data-lucide="heart" class="w-5 h-5"></i>
+      <span>Favorito</span>
+    </a>
+    <a href="go:inicio" class="flex flex-col items-center hover:opacity-90">
+      <i data-lucide="settings" class="w-5 h-5"></i>
+      <span>Ajustes</span>
+    </a>
+  </nav>
+
+  <script>
+    lucide.createIcons();
+
+    document.getElementById('supportForm').addEventListener('submit', function (e) {
+      e.preventDefault();
+
+      const form = e.target;
+      const formData = new FormData(form);
+
+      fetch(form.action, {
+        method: "POST",
+        body: formData,
+        headers: { 'Accept': 'application/json' }
+      }).then(response => {
+        if (response.ok) {
+          document.getElementById('successMsg').classList.remove('hidden');
+          form.reset();
+        } else {
+          alert("Ocurrió un error al enviar el formulario.");
+        }
+      }).catch(() => {
+        alert("No se pudo enviar el formulario.");
+      });
+    });
+  </script>
+</body>
+</html>
