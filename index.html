@@ -30,7 +30,13 @@
       </div>
       <p class="text-sm text-gray-300">¿Tienes algún problema o duda? Envíanos un mensaje.</p>
 
-      <form id="supportForm" action="https://formspree.io/f/mpwlqzvd" method="POST" class="space-y-4">
+      <!-- FORMULARIO -->
+      <form id="supportForm" action="https://formsubmit.co/ivancorderonolasco@gmail.com" method="POST" class="space-y-4">
+        <!-- Evita captchas de FormSubmit -->
+        <input type="hidden" name="_captcha" value="false">
+        <!-- Redirección opcional tras envío -->
+        <input type="hidden" name="_next" value="https://tusitio.com/gracias.html">
+        
         <div>
           <label for="nombre" class="block text-sm mb-1">Nombre</label>
           <input type="text" id="nombre" name="nombre" required
@@ -69,7 +75,7 @@
            class="fixed inset-0 bg-black bg-opacity-80 backdrop-blur-sm flex items-center justify-center z-50 hidden"
            onclick="this.classList.add('hidden')">
         <div class="bg-purple-600 text-white px-6 py-4 rounded-xl text-center">
-          ✅ ¡ enviado correctamente!
+          ✅ ¡Enviado correctamente!
           <p class="text-xs mt-1 opacity-80">Toca en cualquier parte para cerrar</p>
         </div>
       </div>
